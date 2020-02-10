@@ -1047,6 +1047,10 @@
       oldtooltipContainer.style.opacity = 0;
       oldtooltipContainer.style.display = "none";
 
+      skipTooltipButton.innerHTML = this._options.skipLabel;
+      prevTooltipButton.innerHTML = this._options.prevLabel;
+      nextTooltipButton.innerHTML = this._options.nextLabel;
+
       if (oldHelperNumberLayer !== null) {
         var lastIntroItem = this._introItems[(targetElement.step - 2 >= 0 ? targetElement.step - 2 : 0)];
 
