@@ -101,7 +101,29 @@
       /* Adding animation to hints? */
       hintAnimation: true,
       /* additional classes to put on the buttons */
-      buttonClass: "introjs-button"
+      buttonClass: "introjs-button",
+      /* change position's behavior on media if need
+      mobile first oriented
+      */
+      media: [
+        {
+          active: true,
+          point: 768,
+          positions: {
+            "top-middle-aligned": "top-middle-aligned",
+            "top-right-aligned": "top-right-aligned",
+            "top-left-aligned": "top-left-aligned",
+            "bottom-middle-aligned": "top-middle-aligned",
+            "bottom-right-aligned": "top-right-aligned",
+            "bottom-left-aligned": "top-left-aligned",
+            "top": "top",
+            "left": "left",
+            "right": "right",
+            "bottom": "top",
+            "floating": "floating"
+          }
+        }
+      ]
     };
   }
 
@@ -633,6 +655,21 @@
     // Floating is always valid, no point in calculating
     if (currentTooltipPosition !== "floating") { 
       currentTooltipPosition = _determineAutoPosition.call(this, targetElement, tooltipLayer, currentTooltipPosition);
+    }
+
+    /* 
+    change position's behavior on media if need
+    mobile first oriented
+    */
+
+    var absClientWidth = document.documentElement.clientWidth;
+    var media = this._options.media
+    .filter(function (i) {return i.active && absClientWidth <= i.point})
+    .sort(function (a, b) { return b.point - a.point });
+    
+    if (media.length > 0) {
+      media = media[media.length - 1]
+      currentTooltipPosition = media.positions[currentTooltipPosition];
     }
 
     var tooltipLayerStyleLeft;
