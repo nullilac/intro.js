@@ -1406,19 +1406,30 @@
     }
 
     if (!_elementInViewport(targetElement.element)) {
-      var winHeight = _getWinSize().height;
       var top = rect.bottom - (rect.bottom - rect.top);
 
-      // TODO (afshinm): do we need scroll padding now?
-      // I have changed the scroll option and now it scrolls the window to
-      // the center of the target element or tooltip.
-
-      if (top < 0 || targetElement.element.clientHeight > winHeight) {
-        window.scrollBy(0, rect.top - ((winHeight / 2) -  (rect.height / 2)) - this._options.scrollPadding); // 30px padding from edge to look nice
-
-      //Scroll down
-      } else {
-        window.scrollBy(0, rect.top - ((winHeight / 2) -  (rect.height / 2)) + this._options.scrollPadding); // 30px padding from edge to look nice
+      var winHeight = _getWinSize().height;
+      var absY = rect.top + pageYOffset;
+      var winHalfHeight = winHeight / 2;
+      var elemHalfHeight = rect.height / 2;
+      var absYScroll = absY - winHalfHeight + elemHalfHeight;
+      var scrollToOptions = {top: absYScroll, left: 0, behavior: "smooth"}
+      
+      try {
+        // if scrollTo with options is working
+        if (top < 0 || targetElement.element.clientHeight > winHeight) {
+          scrollToOptions.top -= this._options.scrollPadding;
+          window.scrollTo(scrollToOptions);
+        } else {
+          scrollToOptions.top += this._options.scrollPadding;
+          window.scrollTo(scrollToOptions);
+        }
+      }catch(e) {
+        if (top < 0 || targetElement.element.clientHeight > winHeight) {
+          window.scrollTo(0, scrollToOptions.top - 30);
+        } else {
+          window.scrollTo(0, scrollToOptions.top + 30);
+        }
       }
     }
   }
