@@ -937,7 +937,8 @@
 
     // valid right must be at least a tooltipWidth
     // width away from left side
-    if (offsetLeft < tooltipWidth) {
+    // -50 is fix for 320px width mobile
+    if (offsetLeft < tooltipWidth - 50) {
       _removeEntry(possibleAlignments, '-right-aligned');
     }
 
@@ -1774,11 +1775,11 @@
    * @returns {Object} width and height attributes
    */
   function _getWinSize() {
-    if (window.innerWidth !== undefined) {
-      return { width: window.innerWidth, height: window.innerHeight };
-    } else {
+    try {
       var D = document.documentElement;
       return { width: D.clientWidth, height: D.clientHeight };
+    }catch(e) {
+      return { width: window.innerWidth, height: window.innerHeight };
     }
   }
 
