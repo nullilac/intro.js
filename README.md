@@ -1,10 +1,15 @@
-# Intro.js v2.9.3
+# Intro.js fork v2.9.3
 
-[![Build Status](https://travis-ci.org/usablica/intro.js.svg?branch=master)](https://travis-ci.org/usablica/intro.js)
+## Improvements
+
+- ability to change text in buttons at runtime with setOptions
+- smooth scrolling
+- ability to change media-based positioning behavior
+- bug fix: change _getWinSize function for correct position, more correct position on 320px mobile
 
 > Better introductions for websites and features with a step-by-step guide for your projects.
 
-## Where to get
+## Where to get original repo
 You can obtain your local copy of Intro.js from:
 
 **1)** This github repository, using ```git clone https://github.com/usablica/intro.js.git```
